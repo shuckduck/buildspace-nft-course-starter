@@ -14,7 +14,7 @@ spec:
         app: buildspace-nft-course-starter
     spec:
       containers:
-      - image: gcr.io/my-epic-nft/buildspace-nft-course-starter:latest
+      - image: gcr.io/my-epic-nft/buildspace-nft-course-starter:DEPLOYMENT_VERSION
         imagePullPolicy: IfNotPresent
         name: buildspace-nft-course-starter
         ports:
