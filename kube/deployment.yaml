@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: buildspace-nft-course-starter-deployment
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: buildspace-nft-course-starter
+  template:
+    metadata:
+      labels:
+        app: buildspace-nft-course-starter
+    spec:
+      containers:
+      - image: gcr.io/my-epic-nft/buildspace-nft-course-starter:latest
+        imagePullPolicy: IfNotPresent
+        name: buildspace-nft-course-starter
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 100m
+            memory: 1G

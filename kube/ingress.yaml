@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: buildspace-nft-course-starter-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: buildspace-nft-course-starter-ip
+    networking.gke.io/managed-certificates: buildspace-nft-course-starter-managed-cert
+    kubernetes.io/ingress.class: "gce"
+  labels:
+    app: buildspace-nft-course-starter
+spec:
+  defaultBackend:
+    service:
+      name: buildspace-nft-course-starter-service
+      port:
+        number: 8080

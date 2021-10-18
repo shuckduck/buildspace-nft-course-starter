@@ -1,0 +1,8 @@
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: buildspace-nft-course-starter-managed-cert
+spec:
+  domains:
+    - ascendantridge.com
+    - www.ascendantridge.com

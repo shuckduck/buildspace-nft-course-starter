@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: buildspace-nft-course-starter
+  name: buildspace-nft-course-starter-service
+  namespace: default
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: buildspace-nft-course-starter
+  type: NodePort
