@@ -1,11 +1,11 @@
-FROM node:12.16.3-alpine as build
+FROM node:12.22.7-alpine as build
 
 WORKDIR /app
 
 COPY ./build ./build
 
 # ---
-FROM fholzer/nginx-brotli:v1.12.2
+FROM nginx:1.20.1-alpine
 
 WORKDIR /etc/nginx
 ADD nginx.conf /etc/nginx/nginx.conf
