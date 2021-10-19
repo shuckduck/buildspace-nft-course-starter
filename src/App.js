@@ -6,7 +6,7 @@ import myEpicNft from './utils/MyEpicNFT.json';
 
 // Constants
 const CONTRACT_ADDRESS = "0x066163A2D5Efa5043B3213208Fd0215e9EcccD7c";
-const TWITTER_HANDLE = '_buildspace';
+const TWITTER_HANDLE = 'tchristensen952';
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 const OPENSEA_LINK = '';
 const TOTAL_MINT_COUNT = 50;
@@ -106,6 +106,7 @@ const App = () => {
       const { ethereum } = window;
 
       if (ethereum) {
+        console.log("ethereum", ethereum)
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
         const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
