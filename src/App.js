@@ -6,8 +6,10 @@ import myEpicNft from './utils/MyEpicNFT.json';
 
 // Constants
 const CONTRACT_ADDRESS = "0x066163A2D5Efa5043B3213208Fd0215e9EcccD7c";
-const TWITTER_HANDLE = 'tchristensen952';
-const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
+const BUILDSPACE_TWITTER_HANDLE = '_buildspace';
+const MY_TWITTER_HANDLE = 'tchristensen952';
+const BUILDSPACE_TWITTER_LINK = `https://twitter.com/${BUILDSPACE_TWITTER_HANDLE}`;
+const MY_TWITTER_LINK = `https://twitter.com/${MY_TWITTER_HANDLE}`;
 const OPENSEA_LINK = '';
 const TOTAL_MINT_COUNT = 50;
 
@@ -193,10 +195,17 @@ const App = () => {
           <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
           <a
             className="footer-text"
-            href={TWITTER_LINK}
+            href={BUILDSPACE_TWITTER_LINK}
             target="_blank"
             rel="noreferrer"
-          >{`built on @${TWITTER_HANDLE}`}</a>
+          >{`built on @${BUILDSPACE_TWITTER_HANDLE}`}</a>
+          <br/>
+          <a
+            className="footer-text"
+            href={MY_TWITTER_LINK}
+            target="_blank"
+            rel="noreferrer"
+          >{`, by @${MY_TWITTER_HANDLE}`}</a>
         </div>
       </div>
     </div>
