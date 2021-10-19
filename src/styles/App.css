@@ -61,6 +61,13 @@
   margin-right: 15px;
 }
 
+.mint-button-loading {
+  background: -webkit-linear-gradient(left, #a200d6, #ff6fdf);
+  background-size: 200% 200%;
+  animation: gradient-animation 1s ease-in-out infinite;
+  margin-right: 15px;
+}
+
 .opensea-button {
   background-color: rgb(32, 129, 226);
 }

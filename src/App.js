@@ -5,7 +5,7 @@ import { ethers } from "ethers";
 import myEpicNft from './utils/MyEpicNFT.json';
 
 // Constants
-const CONTRACT_ADDRESS = "0x5dA9b671CCB486B3A537400Bc5593D099CEe9EC1";
+const CONTRACT_ADDRESS = "0x066163A2D5Efa5043B3213208Fd0215e9EcccD7c";
 const TWITTER_HANDLE = '_buildspace';
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 const OPENSEA_LINK = '';
@@ -14,6 +14,8 @@ const TOTAL_MINT_COUNT = 50;
 const App = () => {
 
   const [currentAccount, setCurrentAccount] = useState("");
+  const [mintCount, setMintCount] = useState(undefined);
+  const [mintInProgress, setMintInProgress] = useState(false);
 
   const checkIfWalletIsConnected = async () => {
 
@@ -32,7 +34,7 @@ const App = () => {
       const account = accounts[0];
       console.log("Found an authorized account:", account);
       setCurrentAccount(account)
-      setupEventListener()
+      eventListeners()
     } else {
       console.log("No authorized account found")
     }
@@ -50,6 +52,16 @@ const App = () => {
       const accounts = await ethereum.request({ method: "eth_requestAccounts" });
 
       console.log("Connected", accounts[0]);
+
+      let chainId = await ethereum.request({ method: 'eth_chainId' });
+      console.log("Connected to chain " + chainId);
+
+      // String, hex code of the chainId of the Rinkebey test network
+      const rinkebyChainId = "0x4";
+      if (chainId !== rinkebyChainId) {
+        alert("You are not connected to the Rinkeby Test Network!");
+      }
+
       setCurrentAccount(accounts[0]);
     } catch (error) {
       console.log(error)
@@ -57,7 +69,7 @@ const App = () => {
   }
 
   // Setup our listener.
-  const setupEventListener = async () => {
+  const eventListeners = async () => {
     // Most of this looks the same as our function askContractToMintNft
     try {
       const { ethereum } = window;
@@ -69,11 +81,17 @@ const App = () => {
 
         connectedContract.on("NewEpicNFTMinted", (from, tokenId) => {
           console.log(from, tokenId.toNumber())
+          setMintInProgress(false)
           alert(`Hey there! We've minted your NFT and sent it to your wallet. It may be blank right now. It can take some time to show up. Here's the link: https://rinkeby.rarible.com/token/${CONTRACT_ADDRESS}:${tokenId.toNumber()}`)
         });
 
-        console.log("Setup event listener!")
-
+        connectedContract.on("CurrentTokenId", (tokenId) => {
+          let currentTokenId = tokenId.toNumber()
+          console.log("current token id: ", currentTokenId)
+          if (currentTokenId) {
+            setMintCount(currentTokenId)
+          }
+        });
       } else {
         console.log("Ethereum object doesn't exist!");
       }
@@ -83,6 +101,7 @@ const App = () => {
   }
 
   const askContractToMintNft = async () => {
+    setMintInProgress(true)
     try {
       const { ethereum } = window;
 
@@ -100,9 +119,11 @@ const App = () => {
 
       } else {
         console.log("Ethereum object doesn't exist!");
+        setMintInProgress(false)
       }
     } catch (error) {
       console.log(error)
+      setMintInProgress(false)
     }
   }
 
@@ -120,10 +141,34 @@ const App = () => {
     </button>
   );
 
+  const renderMintButton = () => (
+    <>
+      {mintInProgress === false ?
+        renderMintNFT()
+        :
+        renderLoadingMintNFT()
+      }
+    </>
+  );
+
   const renderMintNFT = () => (
     <button onClick={askContractToMintNft} className="cta-button mint-button">
       Mint NFT
     </button>
+  );
+
+  const renderLoadingMintNFT = () => (
+    <button disabled className="cta-button mint-button-loading">
+      Minting...
+    </button>
+  );
+
+  const renderMintCount = () => (
+    <div className="mint-count-container">
+      <p className="mint-count">
+        Total NFTs minted by users on the blockchain: {mintCount}
+      </p>
+    </div>
   );
 
   return (
@@ -137,8 +182,11 @@ const App = () => {
           {currentAccount === "" ?
             renderNotConnectedContainer()
             :
-            renderMintNFT()
+            renderMintButton()
           }
+        </div>
+        <div>
+          {mintCount !== undefined && renderMintCount()}
         </div>
         <div className="footer-container">
           <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
