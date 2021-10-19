@@ -199,7 +199,6 @@ const App = () => {
             target="_blank"
             rel="noreferrer"
           >{`built on @${BUILDSPACE_TWITTER_HANDLE}`}</a>
-          <br/>
           <a
             className="footer-text"
             href={MY_TWITTER_LINK}
