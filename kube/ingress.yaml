@@ -4,8 +4,9 @@ metadata:
   name: buildspace-nft-course-starter-ingress
   annotations:
     kubernetes.io/ingress.global-static-ip-name: buildspace-nft-course-starter-ip
-    networking.gke.io/managed-certificates: buildspace-nft-course-starter-managed-cert
     kubernetes.io/ingress.class: "gce"
+    networking.gke.io/managed-certificates: buildspace-nft-course-starter-managed-cert
+    networking.gke.io/v1beta1.FrontendConfig: buildspace-nft-course-starter-frontend-config
   labels:
     app: buildspace-nft-course-starter
 spec:
